@@ -42,10 +42,22 @@ class ProductService extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteProduct(String docId) async {
+  Future<void> deleteProduct(String itemName) async {
     try {
-      await _firestore.collection('coffee').doc(docId).delete();
-      notifyListeners();
+      // Assuming 'itemName' is a field in your documents that uniquely identifies them
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('coffee')
+          .where('name', isEqualTo: itemName)
+          .get();
+
+      if (querySnapshot.size > 0) {
+        String docId = querySnapshot.docs[0].id; // Retrieve the document ID
+        await _firestore.collection('coffee').doc(docId).delete();
+        print('Product deleted successfully: $itemName');
+        notifyListeners();
+      } else {
+        print('Product with name $itemName not found');
+      }
     } catch (e) {
       print('Error deleting product: $e');
     }

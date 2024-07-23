@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
+  final  String email;
+  CartPage({required this.email});
   State<CartPage> createState() => _CartPageState();
 }
 
@@ -43,6 +45,39 @@ class _CartPageState extends State<CartPage> {
           SizedBox(
             height: 75,
           ),
+       
+Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  Text(
+                  'Total Quantity:',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Spacer(),
+                Text(' \$${Provider.of<CoffeeShop>(context, listen: false).getTotalPrice()}',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+              Row(
+              children: [
+                Text(
+                  'Total Price:',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  ' ${Provider.of<CoffeeShop>(context, listen: false).getTotalItem()}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+      
+                  ],
+                ),
           MyButton(
             text: 'pay now',
             onTap: () {
@@ -50,7 +85,7 @@ class _CartPageState extends State<CartPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PaymentPage(totalPrice: 3),
+                  builder: (context) => PaymentPage(totalPrice: Provider.of<CoffeeShop>(context, listen: false).getTotalPrice(),email: widget.email,),
                 ),
               );
             },

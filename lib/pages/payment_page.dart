@@ -1,11 +1,14 @@
+import 'package:cofee_app/auth/email_service.dart';
+import 'package:cofee_app/model/coffee_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-import 'package:cofee_app/pages/cart_page.dart'; // Adjust the import path as per your project structure
+import 'package:cofee_app/pages/cart_page.dart';
+import 'package:provider/provider.dart'; 
 
 class PaymentPage extends StatefulWidget {
   final double totalPrice;
-
-  PaymentPage({required this.totalPrice});
+  final String email;
+  PaymentPage({required this.totalPrice, required this.email});
 
   @override
   _PaymentPageState createState() => _PaymentPageState();
@@ -84,16 +87,16 @@ class _PaymentPageState extends State<PaymentPage> {
               child: ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    // Payment processing logic can go here
-                    // For demonstration purposes, show a SnackBar
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Payment Successful')),
                     );
-                    // Navigate to the CartPage after payment
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => CartPage()),
-                    );
+
+                    Provider.of<CoffeeShop>(context, listen: false).clearCart();
+                    
+                   Navigator.pop(context);
+                      Navigator.pop(context);
+                   
+                    orderDatail(widget.email, widget.totalPrice);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Invalid details')),

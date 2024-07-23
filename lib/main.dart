@@ -1,6 +1,7 @@
 import 'package:cofee_app/auth/product_auth.dart';
 import 'package:cofee_app/firebase_options.dart';
 import 'package:cofee_app/model/coffee_item.dart';
+import 'package:cofee_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cofee_app/pages/login_page.dart';
@@ -21,14 +22,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CoffeeShop()),
-        ChangeNotifierProvider(
-            create: (context) =>
-                ProductService()), 
+        ChangeNotifierProvider(create: (context) => ProductService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: LoginPage(),
-
+// home: HomePage( email: 'tehila6564@gmail.com',),
       ),
     );
   }

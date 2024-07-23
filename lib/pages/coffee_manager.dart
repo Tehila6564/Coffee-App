@@ -61,6 +61,8 @@ class _CoffeeManagerState extends State<CoffeeManager> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Product added successfully')),
                   );
+                  // Refresh product list after adding
+                  setState(() {});
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Please fill all fields')),
@@ -95,6 +97,8 @@ class _CoffeeManagerState extends State<CoffeeManager> {
                           icon: Icon(Icons.delete),
                           onPressed: () async {
                             await productService.deleteProduct(product.name);
+                            print("delete product: " + product.name);
+                          
                             setState(() {});
                           },
                         ),

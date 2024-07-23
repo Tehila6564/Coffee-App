@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'about_page.dart';
 
 class HomePage extends StatefulWidget {
+  final String email;
+  const HomePage({required this.email});
+
   State<HomePage> createState() => _HomePageState();
 }
 
@@ -19,11 +22,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  final List _pages = [
-    ShopPage(),
-    CartPage(),
-  ];
   Widget build(BuildContext context) {
+    final List _pages = [
+      ShopPage(),
+      CartPage(email: widget.email),
+    ];
     return Scaffold(
       backgroundColor: backgroundColor,
       bottomNavigationBar: MyAppBar(
@@ -75,8 +78,9 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
+                            builder: (context) => HomePage(
+                                  email: widget.email,
+                                )),
                       );
                     },
                     child: ListTile(
@@ -103,6 +107,28 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                widget.email == "tehila6564@gmail.com"
+                    ? Padding(
+                        padding: EdgeInsets.only(left: 25),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CoffeeManager(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text("manage products"),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: 30,
+                      )
               ],
             ),
             GestureDetector(
@@ -121,24 +147,6 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(25),
               child: Divider(
                 color: Colors.white,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 25),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CoffeeManager(),
-                    ),
-                  );
-                },
-                child: ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text("manage products"),
-                ),
               ),
             ),
           ],
